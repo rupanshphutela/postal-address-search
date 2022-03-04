@@ -1,8 +1,94 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿
+@{ 
+    ViewData["Title"] = "Home Page"; 
+    }
 
-<div class="text-center">
+<!-- <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>-->
+<div style="text-align: center;">
+    <h1 class="display-4">Search</h1>
+    <h4>Choose a country below</h4>
+    <p class="text-danger" th:if="${errorMessage}" th:text="${errorMessage}"></p>
+    <p class="text-success" th:if="${successMessage}" th:text="${successMessage}"></p>
+    <form method="POST" enctype="text/json" action="/country/address" autocomplete="off">
+        <div>
+            <style>
+                div {
+                    margin-bottom: 10px;
+                }
+
+                label {
+                    display: inline-block;
+                    width: 150px;
+                    text-align: right;
+                }
+            </style>
+            <select name="countries" id="countries" onchange=displayDiv() required>
+                <option value="Any">Any</option>
+                <option value="Germany">Germany</option>
+                <option value="Japan">Japan</option>
+                <option value="Brazil">Brazil</option>
+                <option value="Canada">Canada</option>
+                <option value="India">India</option>
+                <option value="South Korea">South Korea</option>
+                <option value="Mexico">Mexico</option>
+                <option value="Spain">Spain</option>
+                <option value="United Kingdom">United Kingdom</option>
+                <option value="United States">United States</option>
+            </select>
+        </div>
+        <br>
+        <div class="addressFields" style="display: inline-block; text-align: left;">
+            <p align="center"><strong>Address Fields</strong></p>
+            <label for="buildingNumber">Building Number&#09;</label>
+            <input type="text" id="buildingNumber" name="buildingNumber"><br>
+            <label for="streetName">Street Name&#09;</label>
+            <input type="text" id="streetName" name="streetName"><br>
+            <label for="neighborhood">Neighborhood</label>
+            <input type="text" id="neighborhood" name="neighborhood"><br>
+            <label for="quadrant">Quadrant</label>
+            <input type="text" id="quadrant" name="quadrant"><br>
+            <label for="city">City</label>
+            <input type="text" id="city" name="city"><br>
+            <label for="postalCode">Postal Code</label>
+            <input type="text" id="postalCode" name="postalCode"><br>
+            <label for="stateOrProvince">State/Province</label>
+            <input type="text" id="stateOrProvince" name="stateOrProvince"><br>
+            <label for="postalSymbol">Postal Symbol</label>
+            <input type="text" id="postalSymbol" name="postalSymbol"><br>
+            <label for="prefectureName">Prefecture</label>
+            <input type="text" id="prefectureName" name="prefectureName"><br>
+            <label for="subarea">Sub Area</label>
+            <input type="text" id="subarea" name="subarea"><br>
+            <label for="furtherSubarea">Further Sub Area</label>
+            <input type="text" id="furtherSubarea" name="furtherSubarea"><br>
+            <label for="block">Block</label>
+            <input type="text" id="block" name="block"><br>
+            <label for="subdivisionOrPrecinct">Subdivision/Precinct</label>
+            <input type="text" id="subdivisionOrPrecinct" name="subdivisionOrPrecinct"><br>
+        </div>
+        <div>
+            <button id="button" type="button" value="send" class="btn btn-primary" onclick="clearRadios()">Clear</button>
+            <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+        <script>function clearRadios() {
+			document.getElementById("buildingNumber").value = "";
+            document.getElementById("streetName").value = "";
+            document.getElementById("neighborhood").value = "";
+            document.getElementById("quadrant").value = "";
+            document.getElementById("city").value = "";
+            document.getElementById("postalCode").value = "";
+            document.getElementById("stateOrProvince").value = "";
+            document.getElementById("postalSymbol").value = "";
+            document.getElementById("prefectureName").value = "";
+            document.getElementById("subarea").value = "";
+            document.getElementById("furtherSubarea").value = "";
+            document.getElementById("block").value = "";
+            document.getElementById("subdivisionOrPrecinct").value = "";
+	  	  };</script>
+    </form>
 </div>
+
+
