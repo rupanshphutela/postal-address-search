@@ -8,7 +8,7 @@
     "city": "true",
     "postalCode": "true",
     "stateOrProvince": "true",
-    "country": "true",
+    "country": "Any",
     "prefectureName": "true",
     "subarea": "true",
     "furtherSubarea": "true",

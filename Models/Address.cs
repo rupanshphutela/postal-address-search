@@ -12,7 +12,7 @@ namespace AddressManager_final.Models
         public string neighborhood { get; set; }
         public string quadrant { get; set; }
         public string city { get; set; }
-        public string postalCOde { get; set; }
+        public string postalCode { get; set; }
         public string stateOrProvince { get; set; }
         public string country { get; set; }
         public string prefectureName { get; set; }
