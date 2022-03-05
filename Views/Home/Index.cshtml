@@ -25,19 +25,26 @@
                     text-align: right;
                 }
             </style>
-            <select name="countries" id="countries" onchange=displayDiv() required>
-                <option value="Any">Any</option>
-                <option value="Germany">Germany</option>
-                <option value="Japan">Japan</option>
-                <option value="Brazil">Brazil</option>
-                <option value="Canada">Canada</option>
-                <option value="India">India</option>
-                <option value="South Korea">South Korea</option>
-                <option value="Mexico">Mexico</option>
-                <option value="Spain">Spain</option>
-                <option value="United Kingdom">United Kingdom</option>
-                <option value="United States">United States</option>
-            </select>
+                @Html.DropDownList("countries", new SelectList(Enumerable.Empty
+        <SelectListItem>()))
+
+            <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+            <script type="text/javascript">
+                $(document).ready(function() {
+                    $.ajax({
+                        url: "/api/Countries",
+                        type: "GET",
+                        contentType: "application/json; charset=utf-8",
+                        datatype: JSON,
+                        success: function(result) {
+                            $.each(result, function(key,value) {   
+                            $('#countries').append($("<option></option>").attr("value", key).text(value));
+                            });
+                        },
+                        error: function(data) {}
+                    });
+                });
+            </script>
         </div>
         <br>
         <div class="addressFields" style="display: inline-block; text-align: left;">
@@ -73,21 +80,26 @@
             <button id="button" type="button" value="send" class="btn btn-primary" onclick="clearRadios()">Clear</button>
             <button type="submit" class="btn btn-primary">Search</button>
         </div>
-        <script>function clearRadios() {
-			document.getElementById("buildingNumber").value = "";
-            document.getElementById("streetName").value = "";
-            document.getElementById("neighborhood").value = "";
-            document.getElementById("quadrant").value = "";
-            document.getElementById("city").value = "";
-            document.getElementById("postalCode").value = "";
-            document.getElementById("stateOrProvince").value = "";
-            document.getElementById("postalSymbol").value = "";
-            document.getElementById("prefectureName").value = "";
-            document.getElementById("subarea").value = "";
-            document.getElementById("furtherSubarea").value = "";
-            document.getElementById("block").value = "";
-            document.getElementById("subdivisionOrPrecinct").value = "";
-	  	  };</script>
+        
+
+        <script>
+
+        function clearRadios() {
+			    document.getElementById("buildingNumber").value = "";
+                document.getElementById("streetName").value = "";
+                document.getElementById("neighborhood").value = "";
+                document.getElementById("quadrant").value = "";
+                document.getElementById("city").value = "";
+                document.getElementById("postalCode").value = "";
+                document.getElementById("stateOrProvince").value = "";
+                document.getElementById("postalSymbol").value = "";
+                document.getElementById("prefectureName").value = "";
+                document.getElementById("subarea").value = "";
+                document.getElementById("furtherSubarea").value = "";
+                document.getElementById("block").value = "";
+                document.getElementById("subdivisionOrPrecinct").value = "";
+	  	        };
+         </script>
     </form>
 </div>
 
