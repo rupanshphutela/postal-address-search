@@ -42,6 +42,23 @@ namespace AddressManager_final.Controllers
             return View(result);
         }
 
+        [HttpPost("api/Search")]
+        public List<Address> SearchAddresses([FromBody]Address address)
+        {
+            var data = _dataService.GetAllAddresssesData().ToList();
+            List<Address> result = new List<Address>();
+
+            foreach (Address a in data)
+            {
+                if (a.Equals(address))
+                {
+                    result.Add(a);
+                }
+            }
+
+            return result;
+        }
+
         public IActionResult Index()
         {
             var addresses = _dataService.GetAllAddresssesData();
