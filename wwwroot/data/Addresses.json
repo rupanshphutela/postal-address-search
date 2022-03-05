@@ -1,21 +1,6 @@
 
 [
-  {
-    "buildingNumber": "true",
-    "streetName": "true",
-    "neighborhood": "true",
-    "quadrant": "true",
-    "city": "true",
-    "postalCode": "true",
-    "stateOrProvince": "true",
-    "country": "Any",
-    "prefectureName": "true",
-    "subarea": "true",
-    "furtherSubarea": "true",
-    "block": "true",
-    "subdivisionOrPrecinct": "true"
-  },
-    { 
+  { 
         "buildingNumber": "4",
         "streetName": "Shulstrasse",
         "neighborhood": null,

@@ -12,7 +12,7 @@
     <h4>Choose a country below</h4>
     <p class="text-danger" th:if="${errorMessage}" th:text="${errorMessage}"></p>
     <p class="text-success" th:if="${successMessage}" th:text="${successMessage}"></p>
-    <form method="POST" enctype="text/json" action="/country/address" autocomplete="off">
+    <form method="POST" enctype="text/plain" action="/api/Search" autocomplete="off">
         <div>
             <style>
                 div {
@@ -30,6 +30,7 @@
 
             <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
             <script type="text/javascript">
+                //Fetching Countries List
                 $(document).ready(function() {
                     $.ajax({
                         url: "/api/Countries",
@@ -37,8 +38,27 @@
                         contentType: "application/json; charset=utf-8",
                         datatype: JSON,
                         success: function(result) {
+                            $('#countries').append($("<option></option>").attr("id", "Any").attr("name","Any").text("Any"));
                             $.each(result, function(key,value) {   
-                            $('#countries').append($("<option></option>").attr("value", key).text(value));
+                            $('#countries').append($("<option></option>").attr("id", value).attr("name",value).text(value)); //iterate over id as number => attr("id", key)
+                            });
+                        },
+                        error: function(data) {}
+                    });
+                });
+
+                //Fetch Country specific fields
+                $("#countries").change(function() { // Run this function when option is selected
+
+                    var country = this.value;
+                    $.ajax({
+                        url: "/api/Country/" + country,
+                        type: "GET",
+                        contentType: "application/json; charset=utf-8",
+                        datatype: JSON,
+                        success: function(result) {
+                            $.each(result, function(key,value) {   
+                                console.log(key,"-",value)
                             });
                         },
                         error: function(data) {}
