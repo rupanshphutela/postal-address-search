@@ -3,10 +3,6 @@
     ViewData["Title"] = "Home Page"; 
     }
 
-<!-- <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>-->
 <div style="text-align: center;">
     <h1 class="display-4">Search</h1>
     <h4>Choose a country below</h4>
@@ -52,7 +48,7 @@
                 <p align="center"><strong>Address Fields</strong></p>
                 <script type="text/javascript">
                     //Fetch Country specific fields
-                    $("#country").change(function() { // Run this function when option is selected
+                    $("#country").change(function() { 
                         var country = this.value;
                         $.ajax({
                             url: "/api/Country/" + country,
@@ -84,51 +80,30 @@
                 }
                 var data = $('#addressSearch').serializeArray()
     .reduce(function(a, x) { a[x.name] = x.value; return a; }, {});
-                var dataiya=JSON.stringify(data);
+                var dataJson=JSON.stringify(data);
                 if(country=="Any"){
-                    dataiya = dataiya.replace(/}$/, ',"country":""' + '}');
-               //     dataiya = '{' + '"country":"",' + dataiya;
+                    dataJson = dataJson.replace(/}$/, ',"country":""' + '}');
                 }
                 $.ajax({
                     type: "POST",
                     url: "/api/Search",
-                    data: dataiya,
+                    data: dataJson,
                     contentType: "application/json; charset=utf-8",
                     datatype: JSON,
                     success: function(result) {
+                        var json = JSON.stringify(result,null, ' ');
+                        console.log(json);
+                        $('#output').text(json);
                     },
                     error: function(result) {
                     }
                 });
             });
-
         </script>
         <div>
-            <button id="button" type="button" value="send" class="btn btn-primary" onclick="clearRadios()">Clear</button>
-            <button id="buttoniya" type="submit" class="btn btn-primary">Search</button>
+            <button id="button" type="button" value="send" class="btn btn-primary" onclick=this.form.reset();>Clear</button>
+            <button id="buttonSubmit" type="submit" class="btn btn-primary">Search</button>
         </div>
-        
-
-        <script>
-
-        function clearRadios() {
-			    document.getElementById("buildingNumber").value = "";
-                document.getElementById("streetName").value = "";
-                document.getElementById("neighborhood").value = "";
-                document.getElementById("quadrant").value = "";
-                document.getElementById("city").value = "";
-                document.getElementById("postalCode").value = "";
-                document.getElementById("stateOrProvince").value = "";
-                document.getElementById("postalSymbol").value = "";
-                document.getElementById("prefectureName").value = "";
-                document.getElementById("subarea").value = "";
-                document.getElementById("furtherSubarea").value = "";
-                document.getElementById("block").value = "";
-                document.getElementById("subdivisionOrPrecinct").value = "";
-	  	        };
-         </script>
     </form>
     <pre id='output'></pre>
 </div>
-
-
