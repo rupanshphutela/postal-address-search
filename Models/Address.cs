@@ -352,7 +352,7 @@ namespace AddressManager_final.Models
             }
             else
             {
-                if (other.block == null)
+                if (other.subdivisionOrPrecinct == null)
                 {
                     subdivisionOrPrecinctSame = true;
                 }
