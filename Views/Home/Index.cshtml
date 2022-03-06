@@ -100,8 +100,10 @@
                         json = JSON.parse(json)
                         for (var i = 0; i < json.length; i++) {
                             for (var keys in json[i]) {
-                                console.log(keys + "-->" + json[i][keys]);
-                                divId.innerHTML = divId.innerHTML + "<br/>" + keys + "-->" + json[i][keys];
+                                if (json[i][keys]) {
+                                    console.log(keys + "-->" + json[i][keys]);
+                                    divId.innerHTML = divId.innerHTML + "<br/>" + keys + "-->" + json[i][keys];
+                                }
                             }
                         }
 
