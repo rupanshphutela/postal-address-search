@@ -21,67 +21,67 @@
                     text-align: right;
                 }
             </style>
-                @Html.DropDownList("country", new SelectList(Enumerable.Empty
-        <SelectListItem>()))
+            @Html.DropDownList("country", new SelectList(Enumerable.Empty
+    <SelectListItem>()))
 
             <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
             <script type="text/javascript">
                 //Fetching Countries List
-                $(document).ready(function() {
+                $(document).ready(function () {
                     $.ajax({
                         url: "/api/Countries",
                         type: "GET",
                         contentType: "application/json; charset=utf-8",
                         datatype: JSON,
-                        success: function(result) {
-                            $('#country').append($("<option></option>").attr("id", "Any").attr("name","Any").text("Any"));
-                            $.each(result, function(key,value) { 
-                                $('#country').append($("<option></option>").attr("id", value).attr("name",value).text(value)); //iterate over id as number => attr("id", key)
-                                });
+                        success: function (result) {
+                            $('#country').append($("<option></option>").attr("id", "Any").attr("name", "Any").text("Any"));
+                            $.each(result, function (key, value) {
+                                $('#country').append($("<option></option>").attr("id", value).attr("name", value).text(value)); //iterate over id as number => attr("id", key)
+                            });
                         },
-                        error: function(data) {}
+                        error: function (data) { }
                     });
                 });
-                </script>
-                </div>
-                <div id="addressFields" class="addressFields" style="display: inline-block; text-align: left;">
-                <p align="center"><strong>Address Fields</strong></p>
-                <script type="text/javascript">
-                    //Fetch Country specific fields
-                    $("#country").change(function() { 
-                        var country = this.value;
-                        $.ajax({
-                            url: "/api/Country/" + country,
-                            type: "GET",
-                            contentType: "application/json; charset=utf-8",
-                            datatype: JSON,
-                            success: function(result) {  
-                                $('#addressFields').empty();
-                                $.each(result, function(key,value) {                            
-                                    $('#addressFields').append($("<label></label>").attr("for", value).text(value));        
-                                    $('#addressFields').append($("<input>").attr("type", "text").attr("id",value).attr("name",value));
-                                    $('#addressFields').append($("<br>"));
-                                });
-                                $('#addressFields').append($("</div>"));
-                            },
-                            error: function(data) {}
-                        });
+            </script>
+        </div>
+        <div id="addressFields" class="addressFields" style="display: inline-block; text-align: left;">
+            <p align="center"><strong>Address Fields</strong></p>
+            <script type="text/javascript">
+                //Fetch Country specific fields
+                $("#country").change(function () {
+                    var country = this.value;
+                    $.ajax({
+                        url: "/api/Country/" + country,
+                        type: "GET",
+                        contentType: "application/json; charset=utf-8",
+                        datatype: JSON,
+                        success: function (result) {
+                            $('#addressFields').empty();
+                            $.each(result, function (key, value) {
+                                $('#addressFields').append($("<label></label>").attr("for", value).text(value));
+                                $('#addressFields').append($("<input>").attr("type", "text").attr("id", value).attr("name", value));
+                                $('#addressFields').append($("<br>"));
+                            });
+                            $('#addressFields').append($("</div>"));
+                        },
+                        error: function (data) { }
                     });
+                });
             </script>
         </div>
         <br>
         <script>
 
-            $("#addressSearch").submit(function(e) {
+            $("#addressSearch").submit(function (e) {
                 e.preventDefault();
                 var country = $("#country").val();
-                if(country=="Any"){
+                if (country == "Any") {
                     $("#country").val(" ");
                 }
                 var data = $('#addressSearch').serializeArray()
-    .reduce(function(a, x) { a[x.name] = x.value; return a; }, {});
-                var dataJson=JSON.stringify(data);
-                if(country=="Any"){
+                    .reduce(function (a, x) { a[x.name] = x.value; return a; }, {});
+                var dataJson = JSON.stringify(data);
+                if (country == "Any") {
                     dataJson = dataJson.replace(/}$/, ',"country":""' + '}');
                 }
                 $.ajax({
@@ -90,12 +90,13 @@
                     data: dataJson,
                     contentType: "application/json; charset=utf-8",
                     datatype: JSON,
-                    success: function(result) {
-                        var json = JSON.stringify(result,null, ' ');
+                    success: function (result) {
+                        var json = JSON.stringify(result, null, ' ');
                         console.log(json);
-                        $('#output').text(json);
+                        //$('#output').text(json);
+                        fun(json);
                     },
-                    error: function(result) {
+                    error: function (result) {
                     }
                 });
             });
@@ -105,5 +106,19 @@
             <button id="buttonSubmit" type="submit" class="btn btn-primary">Search</button>
         </div>
     </form>
-    <pre id='output'></pre>
+    <script>
+        <div id="myData"></div>
+
+        function fun(data) {
+            console.log("from function=============");
+            var mainContainer = document.getElementById("myData");
+            for (var i = 0; i < data.length; i++) {
+                var div = document.createElement("div");
+                div.innerHTML = 'Name: ' + data[i];
+                mainContainer.appendChild(div);
+            }
+        }
+    </script>
+
+
 </div>
