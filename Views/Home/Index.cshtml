@@ -25,7 +25,7 @@
                     text-align: right;
                 }
             </style>
-                @Html.DropDownList("countries", new SelectList(Enumerable.Empty
+                @Html.DropDownList("country", new SelectList(Enumerable.Empty
         <SelectListItem>()))
 
             <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
@@ -38,40 +38,47 @@
                         contentType: "application/json; charset=utf-8",
                         datatype: JSON,
                         success: function(result) {
-                            $('#countries').append($("<option></option>").attr("id", "Any").attr("name","Any").text("Any"));
-                            $.each(result, function(key,value) {   
-                            $('#countries').append($("<option></option>").attr("id", value).attr("name",value).text(value)); //iterate over id as number => attr("id", key)
-                            });
+                            $('#country').append($("<option></option>").attr("id", "Any").attr("name","Any").text("Any"));
+                            $.each(result, function(key,value) { 
+                                $('#country').append($("<option></option>").attr("id", value).attr("name",value).text(value)); //iterate over id as number => attr("id", key)
+                                });
                         },
                         error: function(data) {}
                     });
                 });
-
-                //Fetch Country specific fields
-                $("#countries").change(function() { // Run this function when option is selected
-
-                    var country = this.value;
-                    $.ajax({
-                        url: "/api/Country/" + country,
-                        type: "GET",
-                        contentType: "application/json; charset=utf-8",
-                        datatype: JSON,
-                        success: function(result) {
-                            $.each(result, function(key,value) {   
-                                console.log(key,"-",value)
-                            });
-                        },
-                        error: function(data) {}
+                </script>
+                </div>
+                <div id="addressFields" class="addressFields" style="display: inline-block; text-align: left;">
+                <p align="center"><strong>Address Fields</strong></p>
+                <script type="text/javascript">
+                    //Fetch Country specific fields
+                    $("#country").change(function() { // Run this function when option is selected
+                        var country = this.value;
+                        $.ajax({
+                            url: "/api/Country/" + country,
+                            type: "GET",
+                            contentType: "application/json; charset=utf-8",
+                            datatype: JSON,
+                            success: function(result) {  
+                                $('#addressFields').empty();
+                                $.each(result, function(key,value) {                            
+                                    $('#addressFields').append($("<label></label>").attr("for", value).text(value));        
+                                    $('#addressFields').append($("<input>").attr("type", "text").attr("id",value).attr("name",value));
+                                    $('#addressFields').append($("<br>"));
+                                });
+                                $('#addressFields').append($("</div>"));
+                            },
+                            error: function(data) {}
+                        });
                     });
-                });
             </script>
         </div>
         <br>
-        <div class="addressFields" style="display: inline-block; text-align: left;">
+        <div class="addressFields1" style="display: inline-block; text-align: left;">
             <p align="center"><strong>Address Fields</strong></p>
-            <label for="buildingNumber">Building Number&#09;</label>
+            <label for="buildingNumber">Building Number</label>
             <input type="text" id="buildingNumber" name="buildingNumber"><br>
-            <label for="streetName">Street Name&#09;</label>
+            <label for="streetName">Street Name</label>
             <input type="text" id="streetName" name="streetName"><br>
             <label for="neighborhood">Neighborhood</label>
             <input type="text" id="neighborhood" name="neighborhood"><br>
