@@ -44,7 +44,7 @@ namespace AddressManager_final.Models
             }
             else
             {
-                if (other.buildingNumber == null)
+                if (other.buildingNumber == null || other.buildingNumber == "")
                 {
                     buildingNumberSame = true;
                 }
@@ -71,7 +71,7 @@ namespace AddressManager_final.Models
             }
             else
             {
-                if (other.streetName == null)
+                if (other.streetName == null || other.streetName == "")
                 {
                     streetNameSame = true;
                 }
@@ -98,7 +98,7 @@ namespace AddressManager_final.Models
             }
             else
             {
-                if (other.neighborhood == null)
+                if (other.neighborhood == null || other.neighborhood == "")
                 {
                     neighborhoodSame = true;
                 } else {
@@ -121,7 +121,7 @@ namespace AddressManager_final.Models
             }
             else
             {
-                if (other.quadrant == null)
+                if (other.quadrant == null || other.quadrant == "")
                 {
                     quadrantSame = true;
                 }
@@ -146,7 +146,7 @@ namespace AddressManager_final.Models
             }
             else
             {
-                if (other.city == null)
+                if (other.city == null || other.city == "")
                 {
                     citySame = true;
                 }
@@ -171,7 +171,7 @@ namespace AddressManager_final.Models
             }
             else
             {
-                if (other.postalCode == null)
+                if (other.postalCode == null || other.postalCode == "")
                 {
                     postalCodeSame = true;
                 }
@@ -196,7 +196,7 @@ namespace AddressManager_final.Models
             }
             else
             {
-                if (other.stateOrProvince == null)
+                if (other.stateOrProvince == null || other.stateOrProvince == "")
                 {
                     stateOrProvinceSame = true;
                 }
@@ -221,7 +221,7 @@ namespace AddressManager_final.Models
             }
             else
             {
-                if (other.country == null)
+                if (other.country == null || other.country == "")
                 {
                     countrySame = true;
                 }
@@ -230,10 +230,7 @@ namespace AddressManager_final.Models
                     countrySame = false;
                 }
             }
-            if (other.country == "Any")
-            {
-                countrySame = true;
-            }
+
 
             bool prefectureNameSame;
             if (prefectureName != null)
@@ -250,7 +247,7 @@ namespace AddressManager_final.Models
             }
             else
             {
-                if (other.prefectureName == null)
+                if (other.prefectureName == null || other.prefectureName == "")
                 {
                     prefectureNameSame = true;
                 }
@@ -275,7 +272,7 @@ namespace AddressManager_final.Models
             }
             else
             {
-                if (other.subArea == null)
+                if (other.subArea == null || other.subArea == "")
                 {
                     subAreaSame = true;
                 }
@@ -300,7 +297,7 @@ namespace AddressManager_final.Models
             }
             else
             {
-                if (other.furtherSubArea == null)
+                if (other.furtherSubArea == null || other.furtherSubArea == "")
                 {
                     furtherSubAreaSame = true;
                 }
@@ -326,7 +323,7 @@ namespace AddressManager_final.Models
             }
             else
             {
-                if (other.block == null)
+                if (other.block == null || other.block == "")
                 {
                     blockSame = true;
                 }
@@ -352,7 +349,7 @@ namespace AddressManager_final.Models
             }
             else
             {
-                if (other.block == null)
+                if (other.subdivisionOrPrecinct == null || other.subdivisionOrPrecinct == "")
                 {
                     subdivisionOrPrecinctSame = true;
                 }
