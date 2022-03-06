@@ -79,7 +79,6 @@
             $("#addressSearch").submit(function(e) {
                 e.preventDefault();
                 var country = $("#country").val();
-                alert(country);
                 if(country=="Any"){
                     $("#country").val(" ");
                 }
@@ -97,10 +96,8 @@
                     contentType: "application/json; charset=utf-8",
                     datatype: JSON,
                     success: function(result) {
-                        alert('ok');
                     },
                     error: function(result) {
-                        alert('error');
                     }
                 });
             });
