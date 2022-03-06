@@ -12,7 +12,7 @@
     <h4>Choose a country below</h4>
     <p class="text-danger" th:if="${errorMessage}" th:text="${errorMessage}"></p>
     <p class="text-success" th:if="${successMessage}" th:text="${successMessage}"></p>
-    <form method="POST" enctype="text/plain" action="/api/Search" autocomplete="off">
+    <form method="POST" enctype="multipart/form-data" action="/api/Search" id="addressSearch" autocomplete="off">
         <div>
             <style>
                 div {
@@ -74,9 +74,41 @@
             </script>
         </div>
         <br>
+        <script>
+
+            $("#addressSearch").submit(function(e) {
+                e.preventDefault();
+                var country = $("#country").val();
+                alert(country);
+                if(country=="Any"){
+                    $("#country").val(" ");
+                }
+                var data = $('#addressSearch').serializeArray()
+    .reduce(function(a, x) { a[x.name] = x.value; return a; }, {});
+                var dataiya=JSON.stringify(data);
+                if(country=="Any"){
+                    dataiya = dataiya.replace(/}$/, ',"country":""' + '}');
+               //     dataiya = '{' + '"country":"",' + dataiya;
+                }
+                $.ajax({
+                    type: "POST",
+                    url: "/api/Search",
+                    data: dataiya,
+                    contentType: "application/json; charset=utf-8",
+                    datatype: JSON,
+                    success: function(result) {
+                        alert('ok');
+                    },
+                    error: function(result) {
+                        alert('error');
+                    }
+                });
+            });
+
+        </script>
         <div>
             <button id="button" type="button" value="send" class="btn btn-primary" onclick="clearRadios()">Clear</button>
-            <button type="submit" class="btn btn-primary">Search</button>
+            <button id="buttoniya" type="submit" class="btn btn-primary">Search</button>
         </div>
         
 
@@ -99,6 +131,7 @@
 	  	        };
          </script>
     </form>
+    <pre id='output'></pre>
 </div>
 
 
