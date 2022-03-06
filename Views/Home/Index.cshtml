@@ -34,6 +34,7 @@
                         contentType: "application/json; charset=utf-8",
                         datatype: JSON,
                         success: function (result) {
+                            $('#country').append($("<option selected disabled hidden></option>").attr("id", "Choose").attr("name", "Choose").text("--Please choose an option--"));
                             $('#country').append($("<option></option>").attr("id", "Any").attr("name", "Any").text("Any"));
                             $.each(result, function (key, value) {
                                 $('#country').append($("<option></option>").attr("id", value).attr("name", value).text(value)); //iterate over id as number => attr("id", key)
@@ -45,10 +46,10 @@
             </script>
         </div>
         <div id="addressFields" class="addressFields" style="display: inline-block; text-align: left;">
-            <p align="center"><strong>Address Fields</strong></p>
             <script type="text/javascript">
                 //Fetch Country specific fields
                 $("#country").change(function () {
+                    $("#buttons").css("display", "block");
                     var country = this.value;
                     $.ajax({
                         url: "/api/Country/" + country,
@@ -57,6 +58,7 @@
                         datatype: JSON,
                         success: function (result) {
                             $('#addressFields').empty();
+                            $('#addressFields').append($("<p></p>").attr("align","center").attr("style", "font-weight : bold").text("Address Fields"));
                             $.each(result, function (key, value) {
                                 $('#addressFields').append($("<label></label>").attr("for", value).text(value));
                                 $('#addressFields').append($("<input>").attr("type", "text").attr("id", value).attr("name", value));
@@ -113,7 +115,7 @@
                 });
             });
         </script>
-        <div>
+        <div id="buttons" style="display:none">
             <button id="button" type="button" value="send" class="btn btn-primary" onclick=this.form.reset();>Clear</button>
             <button id="buttonSubmit" type="submit" class="btn btn-primary">Search</button>
         </div>
