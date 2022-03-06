@@ -61,7 +61,7 @@
                             $('#addressFields').append($("<p></p>").attr("align","center").attr("style", "font-weight : bold").text("Address Fields"));
                             $.each(result, function (key, value) {
                                 $('#addressFields').append($("<label></label>").attr("for", value).text(value));
-                                $('#addressFields').append($("<input>").attr("type", "text").attr("id", value).attr("name", value));
+                                $('#addressFields').append($("<input>").attr("type", "text").attr("style", "margin-left : 10px").attr("id", value).attr("name", value));
                                 $('#addressFields').append($("<br>"));
                             });
                             $('#addressFields').append($("</div>"));
