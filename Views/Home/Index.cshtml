@@ -86,6 +86,7 @@
                 var dataJson = JSON.stringify(data);
                 if (country == "Any") {
                     dataJson = dataJson.replace(/}$/, ',"country":""' + '}');
+                    $("#country").val("Any");
                 }
                 $.ajax({
                     type: "POST",
