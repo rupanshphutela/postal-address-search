@@ -92,7 +92,8 @@
                     data: dataJson,
                     contentType: "application/json; charset=utf-8",
                     datatype: JSON,
-                    success: function (result) {
+                    success: function (result) {                            
+                        $('#output').empty();
                         var json = JSON.stringify(result, null, ' ');
                         //$('#output').text(json);
 
