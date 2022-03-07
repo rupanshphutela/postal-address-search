@@ -48,7 +48,8 @@
         <div id="addressFields" class="addressFields" style="display: inline-block; text-align: left;">
             <script type="text/javascript">
                 //Fetch Country specific fields
-                $("#country").change(function () {
+                $("#country").change(function () {                            
+                    $('#output').empty();
                     $("#buttons").css("display", "block");
                     var country = this.value;
                     $.ajax({
