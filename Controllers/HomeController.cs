@@ -84,7 +84,6 @@ namespace AddressManager_final.Controllers
 
 
 
-        [HttpPost("test")]
         public IActionResult Privacy()
         {
             return View();
