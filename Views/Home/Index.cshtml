@@ -76,7 +76,8 @@
         <script>
 
             $("#addressSearch").submit(function (e) {
-                e.preventDefault();
+                e.preventDefault();                    
+                $("#outputs").css("display", "block");
                 var country = $("#country").val();
                 if (country == "Any") {
                     $("#country").val(" ");
@@ -130,6 +131,8 @@
             <button id="buttonSubmit" type="submit" class="btn btn-primary">Search</button>
         </div>
     </form>
+    <div id="outputs" style="height: auto; margin-right: auto; margin-left: auto; text-align: center; max-height: 200px; max-width: 500px; overflow: auto; background-color: #eeeeee; display: none;">
     <pre id='output'></pre>
+    </div>
 
 </div>
