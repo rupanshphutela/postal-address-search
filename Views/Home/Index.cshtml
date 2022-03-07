@@ -114,7 +114,7 @@
                             for (var keys in json[i]) {
                                 if (json[i][keys]) {
                                     console.log(keys + "-->" + json[i][keys]);
-                                    divId.innerHTML = divId.innerHTML + "<br/>" + keys + ": " + json[i][keys];
+                                    divId.innerHTML = divId.innerHTML + "<br/>" + keys.bold() + ": " + json[i][keys];
                                 }
                             }
                             divId.innerHTML = divId.innerHTML + "<br>";
