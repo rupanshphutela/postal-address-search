@@ -32,30 +32,17 @@ namespace AddressManager_final.Controllers
         }
 
         [HttpGet("api/Country/{countryName}")]
-        public List<string> Country(string countryName) //Converted to String List
-        //public ActionResult Country(string countryName)
+        public List<string> Country(string countryName) 
         {
-            if (countryName.Equals("Any"))
-            {
-                var address = _dataService.GetAllAddresssesData().FirstOrDefault();
-                var result = typeof(Address).GetProperties()
-                    .Select(x => new { property = x.Name, value = x.GetValue(address) })
-                    //      .ToList().Select(r => r.property); 
-                    .Select(r => r.property).ToList();
-                result.Remove("country");
-                return result;
-            }
-            else
-            {
-            var address = _dataService.GetAllAddresssesData().Where(c => c.country == countryName).FirstOrDefault();
+            var address = countryName.Equals("Any") ? _dataService.GetAllAddresssesData().FirstOrDefault() :
+                _dataService.GetAllAddresssesData().Where(c => c.country == countryName).FirstOrDefault();
+
             var result = typeof(Address).GetProperties()
-                .Select(x => new { property = x.Name, value = x.GetValue(address) })
-                .Where(x => x.value != null)
-                //      .ToList().Select(r => r.property); 
-                .Select(r => r.property).ToList();
+                    .Select(x => new { property = x.Name, value = x.GetValue(address) })
+                    .Select(r => r.property).ToList();
             result.Remove("country");
+
             return result;
-            }
         }
 
         [HttpPost("api/Search")]
