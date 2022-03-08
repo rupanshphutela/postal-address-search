@@ -37,9 +37,14 @@ namespace AddressManager_final.Controllers
             var address = countryName.Equals("Any") ? _dataService.GetAllAddresssesData().FirstOrDefault() :
                 _dataService.GetAllAddresssesData().Where(c => c.country == countryName).FirstOrDefault();
 
-            var result = typeof(Address).GetProperties()
+            var result = countryName.Equals("Any") ? typeof(Address).GetProperties()
                     .Select(x => new { property = x.Name, value = x.GetValue(address) })
+                    .Select(r => r.property).ToList() :
+                    typeof(Address).GetProperties()
+                    .Select(x => new { property = x.Name, value = x.GetValue(address) })
+                    .Where(x => x.value != null)
                     .Select(r => r.property).ToList();
+                    
             result.Remove("country");
 
             return result;
