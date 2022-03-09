@@ -1,6 +1,7 @@
 ﻿using AddressManager_final.Interfaces;
 using AddressManager_final.Models;
 using AddressManager_final.Service;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -24,6 +25,8 @@ namespace AddressManager_final.Controllers
         }
 
         [HttpGet("api/Countries")]
+        [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status404NotFound)]
         public IActionResult GetCountries()
         {
             var addresses = _dataService.GetAllAddresssesData();
@@ -37,7 +40,8 @@ namespace AddressManager_final.Controllers
         }
 
         [HttpGet("api/Country/{countryName}")]
-
+        [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status404NotFound)]
         public IActionResult Country(string countryName) 
         {
             countryName = countryName.Trim();
@@ -68,6 +72,8 @@ namespace AddressManager_final.Controllers
         }
 
         [HttpPost("api/Search")]
+        [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status404NotFound)]
         public IActionResult SearchAddresses([FromBody]Address address)
         {
             var data = _dataService.GetAllAddresssesData().ToList();
