@@ -24,34 +24,50 @@ namespace AddressManager_final.Controllers
         }
 
         [HttpGet("api/Countries")]
-        public List<string> GetCountries()
+        public IActionResult GetCountries()
         {
             var addresses = _dataService.GetAllAddresssesData();
-            var countries = addresses.Select(c => c.country).Distinct();
-            return countries.ToList();
+            if (addresses.Count() > 0)
+            {
+                var countries = addresses.Select(c => c.country).Distinct();
+                return Ok(countries.ToList());
+            }
+            return NotFound();
+
         }
 
         [HttpGet("api/Country/{countryName}")]
-        public List<string> Country(string countryName) 
+        public IActionResult Country(string countryName) 
         {
-            var address = countryName.Equals("Any") ? _dataService.GetAllAddresssesData().FirstOrDefault() :
-                _dataService.GetAllAddresssesData().Where(c => c.country == countryName).FirstOrDefault();
+            countryName = countryName.Trim();
+            var result = new List<string>();
+            var addresses = _dataService.GetAllAddresssesData();
+            if (!string.IsNullOrEmpty(countryName) && addresses.Count()>0)
+            {
+                var countries = addresses.Select(c => c.country).Distinct().ToList(); 
+                if (countries.Contains(countryName) || countryName.Equals("Any"))
+                {
+                    var address = countryName.Equals("Any") ? addresses.FirstOrDefault() :
+                        addresses.Where(c => c.country == countryName).FirstOrDefault();
 
-            var result = countryName.Equals("Any") ? typeof(Address).GetProperties()
-                    .Select(x => new { property = x.Name, value = x.GetValue(address) })
-                    .Select(r => r.property).ToList() :
-                    typeof(Address).GetProperties()
-                    .Select(x => new { property = x.Name, value = x.GetValue(address) })
-                    .Where(x => x.value != null)
-                    .Select(r => r.property).ToList();
-                    
-            result.Remove("country");
+                    result = countryName.Equals("Any") ? typeof(Address).GetProperties()
+                            .Select(x => new { property = x.Name, value = x.GetValue(address) })
+                            .Select(r => r.property).ToList() :
+                            typeof(Address).GetProperties()
+                            .Select(x => new { property = x.Name, value = x.GetValue(address) })
+                            .Where(x => x.value != null)
+                            .Select(r => r.property).ToList();
 
-            return result;
+                    result.Remove("country");
+                    return Ok(result);
+                }
+                return NotFound();
+            }
+            return NotFound();            
         }
 
         [HttpPost("api/Search")]
-        public List<Address> SearchAddresses([FromBody]Address address)
+        public IActionResult SearchAddresses([FromBody]Address address)
         {
             var data = _dataService.GetAllAddresssesData().ToList();
             List<Address> result = new List<Address>();
@@ -63,8 +79,12 @@ namespace AddressManager_final.Controllers
                     result.Add(a);
                 }
             }
+            if(result.Count()>0)
+            {
+                return Ok(result);
+            }
 
-            return result;
+            return NotFound();
         }
 
         public IActionResult Index()
