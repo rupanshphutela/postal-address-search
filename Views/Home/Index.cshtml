@@ -9,7 +9,7 @@
     <p class="text-danger" th:if="${errorMessage}" th:text="${errorMessage}"></p>
     <p class="text-success" th:if="${successMessage}" th:text="${successMessage}"></p>
     <form method="POST" enctype="multipart/form-data" action="/api/Search" id="addressSearch" autocomplete="off">
-        <div>
+        <div id="form">
             <style>
                 div {
                     margin-bottom: 10px;
@@ -23,7 +23,8 @@
             </style>
             @Html.DropDownList("country", new SelectList(Enumerable.Empty
     <SelectListItem>()))
-
+            <div id="errorDiv" style="height: auto; margin-right: auto; margin-left: auto; text-align: center; max-height: 25px; max-width: 100px; overflow: auto; background-color: #eeeeee; display: none;"></div>
+            <pre id="errorPre" style="color: red; font-weight : bold"></pre>
             <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
             <script type="text/javascript">
                 //Fetching Countries List
@@ -41,18 +42,18 @@
                             });
                         },
                         error: function (data) {
-                            $('#output').empty();
-                            var divId = document.getElementById("output")
-                            divId.innerHTML = divId.innerHTML + "<br/>" +"sorry No matching addresses"
+                            $("#errorDiv").css("display", "block");
+                            $('#errorPre').empty();
+                            $('#errorPre').text("Sorry, our backend application has a problem, please check later..");
                         }
                     });
                 });
             </script>
-        </div>
         <div id="addressFields" class="addressFields" style="display: inline-block; text-align: left;">
             <script type="text/javascript">
                 //Fetch Country specific fields
-                $("#country").change(function () {                            
+                $("#country").change(function () {
+                    $('#errorPre').empty();
                     $('#output').empty();
                     $("#buttons").css("display", "block");
                     var country = this.value;
@@ -72,20 +73,21 @@
                             $('#addressFields').append($("</div>"));
                         },
                         error: function (data) {
-                            $('#output').empty();
-                            var divId = document.getElementById("output")
-                            divId.innerHTML = divId.innerHTML + "<br/>" +"sorry No matching addresses"
+                            $("#errorDiv").css("display", "block");
+                            $('#errorPre').empty();
+                            $('#errorPre').text("Sorry!! Address Fields encountered an issue, please check later..");
                         }
                     });
                 });
             </script>
         </div>
+
         <br>
         <script>
 
             $("#addressSearch").submit(function (e) {
+                $('#errorPre').empty();
                 e.preventDefault();                    
-                $("#outputs").css("display", "block");
                 var country = $("#country").val();
                 if (country == "Any") {
                     $("#country").val(" ");
@@ -103,36 +105,35 @@
                     data: dataJson,
                     contentType: "application/json; charset=utf-8",
                     datatype: JSON,
-                    success: function (result) {                            
+                    success: function (result) {
+                        $("#outputs").css("display", "block");
                         $('#output').empty();
                         var json = JSON.stringify(result, null, ' ');
                         //$('#output').text(json);
 
                         var divId = document.getElementById("output")
-                        console.log(JSON.parse(json) + " " + JSON.parse(json).length)
+                        //console.log(JSON.parse(json) + " " + JSON.parse(json).length)
                         json = JSON.parse(json)
-/*
-                        if (json.length <= 0) {
-                            var divId = document.getElementById("output")
-                            divId.innerHTML = divId.innerHTML + "<br/>" +"sorry No matching addresses"
-                        }
-                        */
-                        console.log(json)
+
+                        //console.log(json)
                         for (var i = 0; i < json.length; i++) {
                             for (var keys in json[i]) {
                                 if (json[i][keys]) {
-                                    console.log(keys + "-->" + json[i][keys]);
+                                    //console.log(keys + "-->" + json[i][keys]);
+                                    //$('#output').append(divId.innerHTML + "<br/>" + keys.bold() + ": " + json[i][keys]);
                                     divId.innerHTML = divId.innerHTML + "<br/>" + keys.bold() + ": " + json[i][keys];
                                 }
                             }
                             divId.innerHTML = divId.innerHTML + "<br>";
+                            //$('#output').append("<br>");
                         }
 
                     },
                     error: function (result) {
-                        $('#output').empty();
-                        var divId = document.getElementById("output")
-                        divId.innerHTML = divId.innerHTML + "<br/>" +"sorry No matching addresses"
+                        $("#outputs").css("display", "none");
+                        $("#errorDiv").css("display", "block");
+                        $('#errorPre').empty();
+                        $('#errorPre').text("Sorry!! Address not found, please check again..");
                     }
                 });
             });
@@ -141,6 +142,8 @@
             <button id="button" type="button" value="send" class="btn btn-primary" onclick=this.form.reset();>Clear</button>
             <button id="buttonSubmit" type="submit" class="btn btn-primary">Search</button>
         </div>
+    </div>
+
     </form>
     <div id="outputs" style="height: auto; margin-right: auto; margin-left: auto; text-align: center; max-height: 200px; max-width: 500px; overflow: auto; background-color: #eeeeee; display: none;">
     <pre id='output'></pre>

@@ -37,6 +37,7 @@ namespace AddressManager_final.Controllers
         }
 
         [HttpGet("api/Country/{countryName}")]
+
         public IActionResult Country(string countryName) 
         {
             countryName = countryName.Trim();
