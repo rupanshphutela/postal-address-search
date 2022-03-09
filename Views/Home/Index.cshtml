@@ -23,7 +23,6 @@
             </style>
             @Html.DropDownList("country", new SelectList(Enumerable.Empty
     <SelectListItem>()))
-            <div id="errorDiv" style="height: auto; margin-right: auto; margin-left: auto; text-align: center; max-height: 25px; max-width: 100px; overflow: auto; background-color: #eeeeee; display: none;"></div>
             <pre id="errorPre" style="color: red; font-weight : bold"></pre>
             <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
             <script type="text/javascript">
@@ -49,12 +48,13 @@
                     });
                 });
             </script>
-        <div id="addressFields" class="addressFields" style="display: inline-block; text-align: left;">
+        <div id="addressFields" class="addressFields" style="display: inline-block; text-align: center;">
             <script type="text/javascript">
                 //Fetch Country specific fields
                 $("#country").change(function () {
                     $('#errorPre').empty();
                     $('#output').empty();
+                    $("#addressFields").css("display", "block");
                     $("#buttons").css("display", "block");
                     var country = this.value;
                     $.ajax({
@@ -84,6 +84,12 @@
 
         <br>
         <script>
+            function reset_output() {
+                $('#errorPre').empty();
+                $('#output').empty();
+                $("#addressFields").css("display", "none");
+                $("#buttons").css("display", "none");
+                };
 
             $("#addressSearch").submit(function (e) {
                 $('#errorPre').empty();
@@ -139,13 +145,13 @@
             });
         </script>
         <div id="buttons" style="display:none">
-            <button id="button" type="button" value="send" class="btn btn-primary" onclick=this.form.reset();>Clear</button>
+            <button id="button" type="button" value="send" class="btn btn-primary" onclick=this.form.reset();reset_output();>Clear</button>
             <button id="buttonSubmit" type="submit" class="btn btn-primary">Search</button>
         </div>
     </div>
 
     </form>
-    <div id="outputs" style="height: auto; margin-right: auto; margin-left: auto; text-align: center; max-height: 200px; max-width: 500px; overflow: auto; background-color: #eeeeee; display: none;">
+    <div id="outputs" style="height: auto; margin-right: auto; margin-left: auto; text-align: center; max-height: 200px; max-width: 500px; overflow: auto; display: none;">
     <pre id='output'></pre>
     </div>
 
